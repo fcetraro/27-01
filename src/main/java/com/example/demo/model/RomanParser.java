@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.model;
 
 public class RomanParser {
     public static String intToRoman(int num) {
