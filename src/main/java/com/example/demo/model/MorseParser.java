@@ -1,85 +1,54 @@
 package com.example.demo.model;
 
+import java.util.HashMap;
+
 public class MorseParser {
+    static HashMap<String, String> hm = new HashMap<String, String>();
+
+    public MorseParser() {
+        hm.put(".-","a");
+        hm.put("-...","b");
+        hm.put("-.-.","c");
+        hm.put("-..","d");
+        hm.put(".","e");
+        hm.put("..-.","f");
+        hm.put("--.","g");
+        hm.put("....","h");
+        hm.put("..","i");
+        hm.put(".---","j");
+        hm.put("-.-","k");
+        hm.put(".-..","l");
+        hm.put("--","m");
+        hm.put("-.","n");
+        hm.put("---","o");
+        hm.put(".--.","p");
+        hm.put("--.-","q");
+        hm.put(".-.","r");
+        hm.put("...","s");
+        hm.put("-","t");
+        hm.put("..-","u");
+        hm.put("...-","v");
+        hm.put(".--","w");
+        hm.put("-..-","x");
+        hm.put("-.--","y");
+        hm.put("--..","z");
+        hm.put("-----","0");
+        hm.put(".----","1");
+        hm.put("..---","2");
+        hm.put("...--","3");
+        hm.put("....-","4");
+        hm.put(".....","5");
+        hm.put("-....","6");
+        hm.put("--...","7");
+        hm.put("---..","8");
+        hm.put("----.","9");
+        hm.put("|","");
+    }
+
     private static String decode (String toEncode) {
-        String morse = toEncode;
-
-        if (toEncode.equalsIgnoreCase(".-"))
-            morse = "a";
-        if (toEncode.equalsIgnoreCase("-..."))
-            morse = "b";
-        if (toEncode.equalsIgnoreCase("-.-."))
-            morse = "c";
-        if (toEncode.equalsIgnoreCase("-.."))
-            morse = "d";
-        if (toEncode.equalsIgnoreCase("."))
-            morse = "e";
-        if (toEncode.equalsIgnoreCase("..-."))
-            morse = "f";
-        if (toEncode.equalsIgnoreCase("--."))
-            morse = "g";
-        if (toEncode.equalsIgnoreCase("...."))
-            morse = "h";
-        if (toEncode.equalsIgnoreCase(".."))
-            morse = "i";
-        if (toEncode.equalsIgnoreCase(".---"))
-            morse = "j";
-        if (toEncode.equalsIgnoreCase("-.-"))
-            morse = "k";
-        if (toEncode.equalsIgnoreCase(".-.."))
-            morse = "l";
-        if (toEncode.equalsIgnoreCase("--"))
-            morse = "m";
-        if (toEncode.equalsIgnoreCase("-."))
-            morse = "n";
-        if (toEncode.equalsIgnoreCase("---"))
-            morse = "o";
-        if (toEncode.equalsIgnoreCase(".--."))
-            morse = "p";
-        if (toEncode.equalsIgnoreCase("--.-"))
-            morse = "q";
-        if (toEncode.equalsIgnoreCase(".-."))
-            morse = "r";
-        if (toEncode.equalsIgnoreCase("..."))
-            morse = "s";
-        if (toEncode.equalsIgnoreCase("-"))
-            morse = "t";
-        if (toEncode.equalsIgnoreCase("..-"))
-            morse = "u";
-        if (toEncode.equalsIgnoreCase("...-"))
-            morse = "v";
-        if (toEncode.equalsIgnoreCase(".--"))
-            morse = "w";
-        if (toEncode.equalsIgnoreCase("-..-"))
-            morse = "x";
-        if (toEncode.equalsIgnoreCase("-.--"))
-            morse = "y";
-        if (toEncode.equalsIgnoreCase("--.."))
-            morse = "z";
-        if (toEncode.equalsIgnoreCase("-----"))
-            morse = "0";
-        if (toEncode.equalsIgnoreCase(".----"))
-            morse = "1";
-        if (toEncode.equalsIgnoreCase("..---"))
-            morse = "2";
-        if (toEncode.equalsIgnoreCase("...--"))
-            morse = "3";
-        if (toEncode.equalsIgnoreCase("....-"))
-            morse = "4";
-        if (toEncode.equalsIgnoreCase("....."))
-            morse = "5";
-        if (toEncode.equalsIgnoreCase("-...."))
-            morse = "6";
-        if (toEncode.equalsIgnoreCase("--..."))
-            morse = "7";
-        if (toEncode.equalsIgnoreCase("---.."))
-            morse = "8";
-        if (toEncode.equalsIgnoreCase("----."))
-            morse = "9";
-        if (toEncode.equalsIgnoreCase("|"))
-            morse = "";
-
-        return morse;
+        if(hm.containsKey(toEncode)) return hm.get(toEncode);
+        System.out.println("Caracter no identificado");
+        return "";
     }
     public static String parseMorse(String morseCode){
         String[] morseWords = morseCode.split("   ");
@@ -90,22 +59,11 @@ public class MorseParser {
         return parsedPhrase;
     }
     static String parseWord(String morseWord){
-        String newEnglish = "";
-        String selectedEnglish;
-        String convertedEnglish;
-        String[] morseChars = morseWord.split(" ");
-        for (int i = 0; i < morseChars.length; i++)
-        {
-            selectedEnglish = morseChars[i];
-            boolean endsWithWordSeparator = selectedEnglish.endsWith("|");
-            if(endsWithWordSeparator) selectedEnglish = selectedEnglish.substring(0, selectedEnglish.length() - 1);
-            convertedEnglish = decode(selectedEnglish);
-            newEnglish = newEnglish + convertedEnglish;
-            if (endsWithWordSeparator)
-            {
-                newEnglish = newEnglish + " ";
-            }
+        String[] morseWords = morseWord.split(" ");
+        String parsedWord = "";
+        for (String word: morseWords) {
+            parsedWord = parsedWord + decode(word);
         }
-        return newEnglish;
+        return parsedWord;
     }
 }
